@@ -6,93 +6,150 @@
     <title>土壤物理课题组 - 南京农业大学</title>
     <style>
         :root {
-            --primary-color: #2c5f2d;
-            --secondary-color: #97BC62;
-            --text-color: #333;
+            --primary: #2c5f2d;
+            --secondary: #97BC62;
+            --accent: #FFAC00;
+            --light: #f8f9fa;
+            --dark: #1a1a1a;
         }
 
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Helvetica Neue', Arial, sans-serif;
+            font-family: 'Poppins', 'Helvetica Neue', sans-serif;
         }
 
         body {
-            background: #f8f9fa;
-            line-height: 1.7;
-            color: var(--text-color);
+            background: var(--light);
+            color: var(--dark);
+            scroll-behavior: smooth;
         }
 
-        .header {
-            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
-            color: white;
-            padding: 6rem 2rem;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .header::after {
-            content: '';
-            position: absolute;
-            bottom: -50px;
-            left: 0;
+        /* 导航栏 */
+        .navbar {
+            position: fixed;
+            top: 0;
             width: 100%;
-            height: 100px;
-            background: white;
-            transform: skewY(-3deg);
+            background: rgba(255,255,255,0.95);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 2px 15px rgba(0,0,0,0.1);
+            z-index: 1000;
         }
 
-        .container {
+        .nav-container {
             max-width: 1200px;
             margin: 0 auto;
-            padding: 2rem;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-link {
+            color: var(--dark);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+            position: relative;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary);
+            transition: width 0.3s;
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        /* 标题区 */
+        .hero {
+            padding: 12rem 2rem 6rem;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            text-align: center;
+            clip-path: polygon(0 0, 100% 0, 100% 90%, 0 100%);
+            margin-bottom: -5rem;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1.5rem;
+            letter-spacing: 1px;
+        }
+
+        /* 内容区公共样式 */
+        .section {
+            padding: 6rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 3rem;
+            position: relative;
+            padding-left: 1.5rem;
+        }
+
+        .section-title::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 5px;
+            height: 80%;
+            background: var(--secondary);
         }
 
         /* 教师团队 */
-        .faculty-section {
-            margin: 4rem 0;
-        }
-
         .faculty-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 2rem;
-            margin-top: 2rem;
         }
 
         .faculty-card {
             background: white;
             border-radius: 15px;
+            overflow: hidden;
             box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-            transition: transform 0.3s, box-shadow 0.3s;
+            transition: transform 0.3s;
         }
 
         .faculty-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+            transform: translateY(-10px);
         }
 
-        .faculty-photo {
+        .faculty-img {
             width: 100%;
             height: 350px;
             object-fit: cover;
-            border-radius: 15px 15px 0 0;
+            border-bottom: 3px solid var(--secondary);
         }
 
         .faculty-info {
-            padding: 1.5rem;
+            padding: 2rem;
         }
 
         /* 在校学生 */
-        .student-section {
-            margin: 4rem 0;
-        }
-
         .student-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
             gap: 1.5rem;
             margin-top: 2rem;
         }
@@ -106,193 +163,212 @@
         }
 
         .student-card:hover {
-            transform: translateY(-3px);
+            transform: translateY(-5px);
         }
 
         /* 文体活动 */
-        .activity-section {
-            margin: 4rem 0;
-        }
-
-        .activity-grid {
+        .gallery-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
             gap: 2rem;
+            margin-top: 2rem;
         }
 
-        .activity-item {
+        .gallery-item {
             position: relative;
             border-radius: 15px;
             overflow: hidden;
         }
 
-        .activity-img {
+        .gallery-img {
             width: 100%;
-            height: 250px;
+            height: 300px;
             object-fit: cover;
             transition: transform 0.3s;
         }
 
-        .activity-overlay {
+        .gallery-caption {
             position: absolute;
             bottom: 0;
-            background: rgba(0,0,0,0.7);
+            background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
             color: white;
+            padding: 2rem 1rem 1rem;
             width: 100%;
-            padding: 1rem;
-            transform: translateY(100%);
-            transition: transform 0.3s;
+            opacity: 0;
+            transition: opacity 0.3s;
         }
 
-        .activity-item:hover .activity-overlay {
-            transform: translateY(0);
+        .gallery-item:hover .gallery-caption {
+            opacity: 1;
         }
 
         /* 毕业生去向 */
-        .employment-section {
-            margin: 4rem 0;
-            background: white;
-            padding: 3rem;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-        }
-
-        .employment-timeline {
+        .timeline {
             position: relative;
             padding-left: 2rem;
-            margin-top: 2rem;
+            margin-top: 3rem;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 2px;
+            height: 100%;
+            background: var(--secondary);
         }
 
         .timeline-item {
             position: relative;
-            padding: 1.5rem;
-            margin-bottom: 2rem;
-            background: #f8f9fa;
-            border-radius: 8px;
+            padding: 2rem;
+            margin-bottom: 3rem;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
         }
 
         .timeline-item::before {
             content: '';
             position: absolute;
-            left: -20px;
-            top: 24px;
-            width: 12px;
-            height: 12px;
-            background: var(--primary-color);
+            left: -29px;
+            top: 2rem;
+            width: 16px;
+            height: 16px;
+            background: var(--primary);
             border-radius: 50%;
-        }
-
-        h2.section-title {
-            font-size: 2.2rem;
-            color: var(--primary-color);
-            margin-bottom: 2rem;
-            padding-left: 1rem;
-            border-left: 4px solid var(--secondary-color);
+            border: 3px solid white;
         }
 
         @media (max-width: 768px) {
-            .activity-grid {
+            .gallery-grid {
                 grid-template-columns: 1fr;
             }
-            
-            .header {
-                padding: 4rem 1rem;
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .nav-links {
+                display: none;
             }
         }
     </style>
 </head>
 <body>
-    <header class="header">
-        <h1 style="font-size: 2.8rem; margin-bottom: 1rem;">土壤物理课题组</h1>
-        <p style="font-size: 1.2rem;">深耕土壤科学 · 培育大地生机</p>
+    <!-- 导航栏 -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <h2 style="color: var(--primary);">土壤物理课题组</h2>
+            <div class="nav-links">
+                <a href="#faculty" class="nav-link">研究团队</a>
+                <a href="#students" class="nav-link">在校学生</a>
+                <a href="#activities" class="nav-link">文体活动</a>
+                <a href="#employment" class="nav-link">毕业去向</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 标题区 -->
+    <header class="hero">
+        <h1>土壤物理课题组</h1>
+        <p>深耕土壤科学 · 培育大地生机</p>
     </header>
 
-    <div class="container">
-        <!-- 教师团队 -->
-        <section class="faculty-section">
-            <h2 class="section-title">研究团队</h2>
-            <div class="faculty-grid">
-                <!-- 教师1 -->
-                <div class="faculty-card">
-                    <img src="prof1.jpg" alt="王教授" class="faculty-photo">
-                    <div class="faculty-info">
-                        <h3>王立军 教授</h3>
-                        <p>博士生导师/课题组长</p>
-                        <p>研究方向：土壤结构演变与调控<br>
-                           邮箱：wanglj@example.com<br>
-                           主持国家自然科学基金重点项目3项...</p>
-                    </div>
+    <!-- 教师团队 -->
+    <section id="faculty" class="section">
+        <h2 class="section-title">研究团队</h2>
+        <div class="faculty-grid">
+            <!-- 教师1 -->
+            <div class="faculty-card">
+                <img src="prof1.jpg" alt="王教授" class="faculty-img">
+                <div class="faculty-info">
+                    <h3>王立军 教授</h3>
+                    <p>博士生导师/课题组长</p>
+                    <hr style="margin: 1rem 0; border-color: var(--light);">
+                    <p>研究方向：土壤结构演变与调控<br>
+                       邮箱：wanglj@example.com<br>
+                       主持国家自然科学基金重点项目3项...</p>
                 </div>
-                <!-- 重复添加其他3位教师 -->
             </div>
-        </section>
+            <!-- 重复添加其他3位教师 -->
+        </div>
+    </section>
 
-        <!-- 在校学生 -->
-        <section class="student-section">
-            <h2 class="section-title">在校学生</h2>
-            <div class="student-grid">
-                <!-- 学生条目模板 -->
-                <div class="student-card">
-                    <h3>张小明</h3>
-                    <p>2022级博士研究生</p>
-                    <p>研究方向：土壤孔隙网络建模</p>
-                </div>
-                <!-- 重复添加27个学生条目 -->
+    <!-- 在校学生 -->
+    <section id="students" class="section">
+        <h2 class="section-title">在校学生</h2>
+        <div class="student-grid">
+            <!-- 学生条目（复制27次） -->
+            <div class="student-card">
+                <h3>张小明</h3>
+                <p>2022级博士研究生</p>
+                <p style="color: var(--secondary);">研究方向：土壤孔隙网络建模</p>
             </div>
-        </section>
+        </div>
+    </section>
 
-        <!-- 文体活动 -->
-        <section class="activity-section">
-            <h2 class="section-title">文体活动</h2>
-            <div class="activity-grid">
-                <div class="activity-item">
-                    <img src="event1.jpg" alt="学术交流" class="activity-img">
-                    <div class="activity-overlay">
-                        <h4>2023学术年会</h4>
-                        <p>课题组全体成员参加全国土壤物理学术研讨会...</p>
-                    </div>
+    <!-- 文体活动 -->
+    <section id="activities" class="section">
+        <h2 class="section-title">文体活动</h2>
+        <div class="gallery-grid">
+            <div class="gallery-item">
+                <img src="event1.jpg" alt="活动1" class="gallery-img">
+                <div class="gallery-caption">
+                    <h4>2023学术年会</h4>
+                    <p>在此填写活动描述...</p>
                 </div>
-                <!-- 添加另外2个活动 -->
             </div>
-        </section>
+            <!-- 添加另外2个活动 -->
+        </div>
+    </section>
 
-        <!-- 毕业生去向 -->
-        <section class="employment-section">
-            <h2 class="section-title">毕业生发展</h2>
-            <div class="employment-timeline">
-                <div class="timeline-item">
-                    <h3>2023届毕业生</h3>
-                    <ul>
-                        <li>李晓东 - 中国科学院南京土壤研究所副研究员</li>
-                        <li>王雪 - 农业农村部耕地质量监测保护中心工程师</li>
-                        <!-- 添加更多条目 -->
-                    </ul>
-                </div>
-                <!-- 添加更多年份 -->
+    <!-- 毕业去向 -->
+    <section id="employment" class="section">
+        <h2 class="section-title">毕业去向</h2>
+        <div class="timeline">
+            <div class="timeline-item">
+                <h3>2023届毕业生</h3>
+                <ul>
+                    <li>李晓东 - 中国科学院南京土壤研究所副研究员</li>
+                    <li>王雪 - 农业农村部耕地质量监测保护中心工程师</li>
+                    <!-- 添加更多条目 -->
+                </ul>
             </div>
-        </section>
-    </div>
+            <!-- 添加更多年份 -->
+        </div>
+    </section>
 
     <script>
-        // 图片懒加载
-        document.addEventListener("DOMContentLoaded", function() {
-            const lazyImages = [].slice.call(document.querySelectorAll("img"));
+        // 导航栏交互
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', e => {
+                e.preventDefault();
+                const target = document.querySelector(link.getAttribute('href'));
+                window.scrollTo({
+                    top: target.offsetTop - 80,
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // 滚动高亮导航
+        window.addEventListener('scroll', () => {
+            const sections = document.querySelectorAll('section');
+            const navLinks = document.querySelectorAll('.nav-link');
             
-            if ("IntersectionObserver" in window) {
-                let lazyImageObserver = new IntersectionObserver(function(entries) {
-                    entries.forEach(function(entry) {
-                        if (entry.isIntersecting) {
-                            let lazyImage = entry.target;
-                            lazyImage.src = lazyImage.dataset.src;
-                            lazyImageObserver.unobserve(lazyImage);
+            sections.forEach(section => {
+                const rect = section.getBoundingClientRect();
+                if (rect.top <= 100 && rect.bottom >= 100) {
+                    const id = section.getAttribute('id');
+                    navLinks.forEach(link => {
+                        link.classList.remove('active');
+                        if (link.getAttribute('href') === `#${id}`) {
+                            link.classList.add('active');
                         }
                     });
-                });
-
-                lazyImages.forEach(function(lazyImage) {
-                    lazyImageObserver.observe(lazyImage);
-                });
-            }
+                }
+            });
         });
     </script>
 </body>
