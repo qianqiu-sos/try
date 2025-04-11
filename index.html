@@ -168,38 +168,48 @@
 
         /* 文体活动 */
         .gallery-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 2rem;
-            margin-top: 2rem;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2.5rem;
         }
 
-        .gallery-item {
-            position: relative;
+        .activity-card {
+            background: white;
             border-radius: 15px;
             overflow: hidden;
-        }
-
-        .gallery-img {
-            width: 100%;
-            height: 300px;
-            object-fit: cover;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
             transition: transform 0.3s;
         }
 
-        .gallery-caption {
-            position: absolute;
-            bottom: 0;
-            background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
-            color: white;
-            padding: 2rem 1rem 1rem;
-            width: 100%;
-            opacity: 0;
-            transition: opacity 0.3s;
+        .activity-card:hover {
+            transform: translateY(-5px);
         }
 
-        .gallery-item:hover .gallery-caption {
-            opacity: 1;
+        .activity-img-container {
+            position: relative;
+            aspect-ratio: 4/3;
+        }
+
+        .activity-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-bottom: 3px solid var(--secondary);
+        }
+
+        .activity-info {
+            padding: 1.5rem;
+        }
+
+        .activity-title {
+            color: var(--primary);
+            margin-bottom: 0.8rem;
+            font-size: 1.2rem;
+        }
+
+        .activity-desc {
+            color: var(--dark);
+            font-size: 0.95rem;
+            line-height: 1.6;
         }
 
         /* 毕业生去向 */
@@ -531,7 +541,7 @@
                 <h3>张娜丽</h3>
                 <p>2024级硕士研究生</p>
                 <p style="color: var(--secondary);">研究方向：土壤孔隙网络建模</p>
-                
+
                 <!-- 添加间距 -->
                 <div style="margin: 20px 0;"></div>
 
@@ -539,24 +549,54 @@
                 <h3>邹杨</h3>
                 <p>2024级硕士研究生</p>
                 <p style="color: var(--secondary);">研究方向：土壤孔隙网络建模</p>
+
+                <!-- 添加间距 -->
+                <div style="margin: 20px 0;"></div>
+
+                <!-- 学生条目（复制27次） -->
+                <h3>Usman Ghani </h3>
+                <p>2024级硕士研究生</p>
+                <p style="color: var(--secondary);">研究方向：土壤孔隙网络建模</p>
             </div>
             </div>
     </section>
 
     <!-- 文体活动 -->
-    <section id="activities" class="section">
-        <h2 class="section-title">文体活动</h2>
-        <div class="gallery-grid">
-            <div class="gallery-item">
-                <img src="event1.jpg" alt="活动1" class="gallery-img">
-                <div class="gallery-caption">
-                    <h4>每年秋游活动</h4>
-                    <p>在此填写活动描述...</p>
-                </div>
+    <h2 class="section-title">文体活动</h2>
+    <div class="gallery-grid">
+        <!-- 活动1 -->
+        <div class="activity-card">
+            <div class="activity-img-container">
+                <img src="./images/activity1.jpg" alt="秋游活动" class="activity-img">
             </div>
-            <!-- 添加另外2个活动 -->
+            <div class="activity-info">
+                <h3 class="activity-title">年度秋游活动</h3>
+                <p class="activity-desc">666</p>
+            </div>
         </div>
-    </section>
+
+        <!-- 活动2 -->
+        <div class="activity-card">
+            <div class="activity-img-container">
+                <img src="./images/activity2.jpg" alt="学术沙龙" class="activity-img">
+            </div>
+            <div class="activity-info">
+                <h3 class="activity-title">土壤科学沙龙</h3>
+                <p class="activity-desc">666</p>
+            </div>
+        </div>
+
+        <!-- 活动3 -->
+        <div class="activity-card">
+            <div class="activity-img-container">
+                <img src="./images/activity3.jpg" alt="实验室开放日" class="activity-img">
+            </div>
+            <div class="activity-info">
+                <h3 class="activity-title">实验室开放日</h3>
+                <p class="activity-desc">666</p>
+            </div>
+        </div>
+    </div>
 
     <!-- 毕业去向 -->
     <section id="employment" class="section">
