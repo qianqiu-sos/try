@@ -558,7 +558,6 @@
                 <p>2024级硕士研究生</p>
                 <p style="color: var(--secondary);">研究方向：土壤孔隙网络建模</p>
             </div>
-            </div>
     </section>
 
     <!-- 文体活动 -->
@@ -617,15 +616,16 @@
     <script>
         // 导航栏交互
         document.querySelectorAll('.nav-link').forEach(link => {
-            link.addEventListener('click', e => {
-                e.preventDefault();
-                const target = document.querySelector(link.getAttribute('href'));
-                window.scrollTo({
-                    top: target.offsetTop - 80,
-                    behavior: 'smooth'
-                });
+        link.addEventListener('click', e => {
+            e.preventDefault();
+            const target = document.querySelector(link.getAttribute('href'));
+            const navHeight = document.querySelector('.navbar').offsetHeight; // 动态获取导航栏高度
+            window.scrollTo({
+                top: target.offsetTop - navHeight - 20, // 增加20px安全间距
+                behavior: 'smooth'
             });
         });
+    });
 
         // 滚动高亮导航
         window.addEventListener('scroll', () => {
